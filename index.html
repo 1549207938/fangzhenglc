@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仿真软件发展脉络</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.5.0/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #2d3748;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px 0 rgba(31, 38, 135, 0.2);
+        }
+        .chart-container {
+            height: 320px;
+            width: 100%;
+            position: relative;
+        }
+        .highlight-text {
+            position: relative;
+            display: inline-block;
+        }
+        .highlight-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(99, 102, 241, 0.2);
+            z-index: -1;
+        }
+        .software-card {
+            transition: all 0.3s ease;
+        }
+        .software-card:hover {
+            transform: scale(1.02);
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #4f46e5;
+        }
+        .timeline-line {
+            width: 2px;
+            background-color: #e5e7eb;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 导航条 -->
+    <nav class="glassmorphism sticky top-0 z-50 p-4 mb-8">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
+                <i class="fas fa-cogs mr-2"></i>仿真软件发展脉络
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#overview" class="text-gray-600 hover:text-indigo-600 transition-colors">概述</a>
+                <a href="#software" class="text-gray-600 hover:text-indigo-600 transition-colors">常用软件</a>
+                <a href="#history" class="text-gray-600 hover:text-indigo-600 transition-colors">发展历程</a>
+                <a href="#events" class="text-gray-600 hover:text-indigo-600 transition-colors">关键事件</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 头部横幅 -->
+    <header class="container mx-auto py-16 px-4 md:px-8 relative">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                仿真软件发展脉络
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 mb-8">从起源到现代应用的全面解析</p>
+        </div>
+    </header>
+
+    <!-- 概述部分 -->
+    <section id="overview" class="container mx-auto py-12 px-4 md:px-8">
+        <div class="glassmorphism p-8 mb-16">
+            <h2 class="text-3xl font-bold mb-6 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center text-white mr-3">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                一、仿真软件概述
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <p class="mb-4">仿真软件是专门用于仿真的计算机软件，它与仿真硬件同为仿真的技术工具。其发展与仿真应用、算法、计算机和建模等技术的发展相辅相成，从50年代中期开始发展至今，功能日益强大，应用范围也不断拓展。</p>
+                    
+                    <div class="my-6">
+                        <h4 class="font-semibold text-lg mb-3 text-gray-700">主要特点：</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm">计算机辅助</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">多领域应用</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">算法支持</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">建模能力</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div id="mermaid-overview" class="w-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常用软件部分 -->
+    <section id="software" class="container mx-auto py-12 px-4 md:px-8">
+        <h2 class="text-3xl font-bold mb-12 text-center">二、常用仿真软件介绍</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <!-- SimuWorks -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/9e5c9a1e39d750bab081a1be81137348" alt="SimuWorks软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">SimuWorks</h3>
+                </div>
+                <p class="text-gray-600 mb-4">为大型科学计算、复杂系统动态特性建模研究、过程仿真培训、系统优化设计与调试、故障诊断与专家系统等，提供通用的、一体化的、全过程支撑的，基于微机环境的开发与运行支撑平台。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-industry mr-1"></i> 能源、电力、化工、航空航天、国防军事、经济</div>
+            </div>
+
+            <!-- VR-Platform -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/5d98ae7c49468a99318472770afc8ad3" alt="VR-Platform软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">VR-Platform</h3>
+                </div>
+                <p class="text-gray-600 mb-4">即虚拟现实仿真平台，适用性强、操作简单、功能强大、高度可视化、所见即所得。所有的操作都是以美工可以理解的方式进行，不需要程序员参与。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-city mr-1"></i> 城市规划、室内设计、工业仿真、古迹复原</div>
+            </div>
+
+            <!-- Infolytica -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/10411dad103eaf36f09b220adcc9fbbc" alt="Infolytica软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">Infolytica</h3>
+                </div>
+                <p class="text-gray-600 mb-4">Infolytica公司于1978年创立，是世界上第一个商业电磁场分析软件公司。该公司一直致力于电磁场有限元分析领域的技术研究和开发，为电磁设计工程师提供完整解决方案。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-bolt mr-1"></i> 航空、航天、汽车、电力、医疗设备</div>
+            </div>
+
+            <!-- MATLAB/Simulink -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <div class="flex">
+                        <img src="https://p3-search.byteimg.com/obj/labis/55bb3c37b83a89270019271eade87889" alt="MATLAB软件标识" class="w-12 h-12 rounded-full object-cover mr-2">
+                        <img src="https://p3-search.byteimg.com/obj/labis/d743465f91e4922e77b3e1ea895483ce" alt="Simulink软件标识" class="w-12 h-12 rounded-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold ml-3">MATLAB/Simulink</h3>
+                </div>
+                <p class="text-gray-600 mb-4">MATLAB是一种高性能的数值计算语言和交互式开发环境，广泛应用于算法开发、数据可视化和数据分析等领域。Simulink作为MATLAB的一个附加模块，专门用于动态系统的建模、仿真和分析。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-calculator mr-1"></i> 算法开发、系统建模、数据分析</div>
+            </div>
+
+            <!-- ANSYS -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/1c149be3d35166e7e3675543ac7a2b38" alt="ANSYS软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">ANSYS</h3>
+                </div>
+                <p class="text-gray-600 mb-4">一款广泛应用于工程领域的有限元分析软件，可用于结构分析、热分析、流体动力学分析、电磁场分析等多种类型的仿真。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-cube mr-1"></i> 结构分析、热分析、流体动力学</div>
+            </div>
+
+            <!-- SolidWorks Simulation -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/44e86e740f8fb99e993da7ffbc9dac45" alt="SolidWorks Simulation软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">SolidWorks Simulation</h3>
+                </div>
+                <p class="text-gray-600 mb-4">集成在SolidWorks中的仿真软件，可用于结构分析、热分析、流体动力学分析等。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-cubes mr-1"></i> 机械设计、工程分析</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <!-- COMSOL Multiphysics -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/9bd0da56195ac2d0bd2e046e48de2a65" alt="COMSOL Multiphysics软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">COMSOL Multiphysics</h3>
+                </div>
+                <p class="text-gray-600 mb-4">多物理场仿真软件，可用于模拟各种物理现象，如电磁场、流体动力学、热传导、结构力学等。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-atom mr-1"></i> 多物理场耦合仿真</div>
+            </div>
+
+            <!-- Adams -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/cd64b11c13f3aff91487ca56e042428d" alt="Adams软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">Adams</h3>
+                </div>
+                <p class="text-gray-600 mb-4">专业的机械系统动力学仿真软件，可用于模拟各种机械系统的运动和载荷。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-cogs mr-1"></i> 机械系统动力学</div>
+            </div>
+
+            <!-- Fluent -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/8f247a6da25774c755e15d371ddadcad" alt="Fluent软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">Fluent</h3>
+                </div>
+                <p class="text-gray-600 mb-4">专业的流体动力学仿真软件，可用于模拟各种流体流动和传热问题。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-water mr-1"></i> 流体动力学、传热分析</div>
+            </div>
+
+            <!-- Abaqus -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/33a58d345b6c4fc0778c3ff6646f4430" alt="Abaqus软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">Abaqus</h3>
+                </div>
+                <p class="text-gray-600 mb-4">高级的有限元分析软件，可用于结构分析、热分析、非线性分析等。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-project-diagram mr-1"></i> 有限元分析、非线性分析</div>
+            </div>
+
+            <!-- PSPICE -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/3173a387aae28d6d4059d9939a900f9c" alt="PSPICE软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">PSPICE</h3>
+                </div>
+                <p class="text-gray-600 mb-4">电路仿真软件，用于电子电路的设计与测试，帮助工程师验证电路的功能和性能。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-microchip mr-1"></i> 电子电路设计与测试</div>
+            </div>
+
+            <!-- LabVIEW -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/a163d996087102c25ccd8775c13825c4" alt="LabVIEW软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">LabVIEW</h3>
+                </div>
+                <p class="text-gray-600 mb-4">图形化编程语言和集成开发环境，适用于数据采集、仪器控制以及工业自动化仿真。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-laptop-code mr-1"></i> 数据采集、仪器控制</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <!-- Multisim -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/fd3e48385dd90d1b08447be2f0f608d0" alt="Multisim软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">Multisim</h3>
+                </div>
+                <p class="text-gray-600 mb-4">专注于电路设计与仿真的软件，能够详细分析电子电路的行为特性。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-plug mr-1"></i> 电子电路设计与分析</div>
+            </div>
+
+            <!-- AnyLogic -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/cf90d5bc343051558c8dfacd7482e39a" alt="AnyLogic软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">AnyLogic</h3>
+                </div>
+                <p class="text-gray-600 mb-4">支持多方法仿真的软件，包括离散事件、智能体建模和系统动力学，适用于复杂系统的研究与优化。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-network-wired mr-1"></i> 复杂系统研究与优化</div>
+            </div>
+
+            <!-- CST Studio Suite -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/ff691047b85088524cec1668cbe7d87d" alt="CST Studio Suite软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">CST Studio Suite</h3>
+                </div>
+                <p class="text-gray-600 mb-4">专业的电磁场仿真软件，适用于天线设计、无线通信设备和电磁兼容性分析等领域。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-satellite-dish mr-1"></i> 电磁场仿真、天线设计</div>
+            </div>
+
+            <!-- Dymola -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/f337f8561e690336cf68d5ba73413209" alt="Dymola软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">Dymola</h3>
+                </div>
+                <p class="text-gray-600 mb-4">动态系统建模与仿真的工具，特别适合处理复杂的物理系统和控制系统。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-car mr-1"></i> 车辆工程、能源系统</div>
+            </div>
+
+            <!-- PowerWorld Simulator -->
+            <div class="glassmorphism p-6 software-card">
+                <div class="flex items-center mb-4">
+                    <img src="https://p3-search.byteimg.com/obj/labis/53f1f3de58d3f73dbda2464363e972ed" alt="PowerWorld Simulator软件标识" class="w-12 h-12 rounded-full object-cover mr-3">
+                    <h3 class="text-xl font-semibold">PowerWorld Simulator</h3>
+                </div>
+                <p class="text-gray-600 mb-4">电力系统仿真软件，用于电网分析、负荷预测和优化调度，为电力行业提供全面的支持。</p>
+                <div class="text-sm text-gray-500"><i class="fas fa-bolt mr-1"></i> 电力系统仿真</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 发展历程部分 -->
+    <section id="history" class="container mx-auto py-12 px-4 md:px-8">
+        <h2 class="text-3xl font-bold mb-12 text-center">三、仿真软件发展历程</h2>
+
+        <div class="glassmorphism p-8 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 起源与早期发展 -->
+                <div class="glassmorphism p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 mr-3">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">起源与早期发展<br><span class="text-sm font-normal">(20世纪50-70年代)</span></h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>20世纪50年代，仿真软件主要应用于航空、航天等领域，以离散事件仿真为主</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>60年代，仿真软件逐渐从专用领域扩展到通用领域，开始引入图形界面</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>70年代，仿真软件进入快速发展阶段，在功能、性能和易用性方面都有了显著提高</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 成熟阶段 -->
+                <div class="glassmorphism p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">成熟阶段<br><span class="text-sm font-normal">(20世纪80-90年代)</span></h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>80年代，仿真软件在功能上更加完善，引入了随机过程、多变量分析、优化算法等</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>90年代，仿真软件在应用领域不断拓展，如制造业、物流、交通运输、金融、医疗等</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>开始引入人工智能、神经网络、遗传算法等先进技术</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 多元化发展 -->
+                <div class="glassmorphism p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">多元化发展<br><span class="text-sm font-normal">(21世纪初至今)</span></h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>21世纪初，仿真软件开始向智能化、网络化、可视化方向发展</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>支持虚拟现实、增强现实等技术，提高了仿真体验</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="timeline-dot mt-1 mr-3"></div>
+                            <span>近年来，仿真软件在云计算、大数据、物联网等新兴技术领域得到了广泛应用</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="glassmorphism p-8">
+            <div id="mermaid-timeline" class="w-full"></div>
+        </div>
+    </section>
+
+    <!-- 关键事件部分 -->
+    <section id="events" class="container mx-auto py-12 px-4 md:px-8">
+        <h2 class="text-3xl font-bold mb-12 text-center">四、关键历史事件对软件发展的影响</h2>
+
+        <div class="glassmorphism p-8 mb-16">
+            <div class="space-y-8">
+                <!-- 1984年 -->
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <div class="bg-indigo-100 text-indigo-800 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold">1984年</div>
+                            <div class="text-sm">里程碑事件</div>
+                        </div>
+                    </div>
+                    <div class="md:w-3/4 md:pl-6">
+                        <h3 class="text-xl font-semibold mb-2">第一个以数据库为核心的仿真软件系统出现</h3>
+                        <p class="text-gray-600">这一事件标志着仿真软件发展进入了一个新的阶段，以数据库为核心将仿真软件的所有功能有机地统一在一起，构成一个完善的系统，为后续仿真软件的发展奠定了基础。</p>
+                    </div>
+                </div>
+
+                <!-- 1999年 -->
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <div class="bg-purple-100 text-purple-800 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold">1999年</div>
+                            <div class="text-sm">行业整合</div>
+                        </div>
+                    </div>
+                    <div class="md:w-3/4 md:pl-6">
+                        <h3 class="text-xl font-semibold mb-2">MSC收购UAI、CSAR和MARC</h3>
+                        <p class="text-gray-600">MSC在这一年的收购行动使其成为市场上惟一一家提供Nastran商业代码的供应商，进一步巩固了其在有限元分析市场的领先地位，也推动了仿真软件行业的整合和发展。</p>
+                    </div>
+                </div>
+
+                <!-- 2008年 -->
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <div class="bg-blue-100 text-blue-800 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold">2008年</div>
+                            <div class="text-sm">战略收购</div>
+                        </div>
+                    </div>
+                    <div class="md:w-3/4 md:pl-6">
+                        <h3 class="text-xl font-semibold mb-2">ANSYS收购Ansoft</h3>
+                        <p class="text-gray-600">此次收购使ANSYS在多物理电磁仿真以及EDA领域迈出了扎实的一步，丰富了其产品线，增强了其在电磁仿真领域的竞争力。</p>
+                    </div>
+                </div>
+
+                <!-- 2016年 -->
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <div class="bg-green-100 text-green-800 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold">2016年</div>
+                            <div class="text-sm">行业整合</div>
+                        </div>
+                    </div>
+                    <div class="md:w-3/4 md:pl-6">
+                        <h3 class="text-xl font-semibold mb-2">西门子收购CD-adapco</h3>
+                        <p class="text-gray-600">CD-adapco是一家全球的工程仿真软件公司，提供涵盖广泛工程学科的软件解决方案。西门子的收购进一步巩固了其在工程仿真领域的地位，推动了仿真软件在多学科领域的融合发展。</p>
+                    </div>
+                </div>
+
+                <!-- 2023年 -->
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <div class="bg-red-100 text-red-800 rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold">2023年</div>
+                            <div class="text-sm">国产突破</div>
+                        </div>
+                    </div>
+                    <div class="md:w-3/4 md:pl-6">
+                        <h3 class="text-xl font-semibold mb-2">戴西软件收购PreSys和VPG</h3>
+                        <p class="text-gray-600">戴西软件成功收购PreSys和VPG，打破了仿真模拟分析领域的技术垄断，填补了国内在该领域的空白，推动了国内工程应用行业的技术创新与产业升级，标志着国产工业仿真软件从技术追赶到并跑创新的突破。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-100 py-8 mt-16">
+        <div class="container mx-auto px-4 md:px-8 text-center text-gray-600">
+            <p>created by <a href="https://space.coze.cn" class="text-indigo-600 hover:text-indigo-800">coze space</a></p>
+            <p class="mt-2">页面内容均由 AI 生成，仅供参考</p>
+        </div>
+    </footer>
+
+    <script>
+        // 渲染mermaid图表
+        document.addEventListener('DOMContentLoaded', function() {
+            // 仿真软件概述图表
+            const overviewDefinition = `
+                graph TD
+                    A[仿真软件] --> B[计算机辅助]
+                    A --> C[多领域应用]
+                    A --> D[算法支持]
+                    A --> E[建模能力]
+                    B --> F[航空、航天]
+                    B --> G[制造业]
+                    B --> H[医疗]
+                    C --> I[结构分析]
+                    C --> J[流体动力学]
+                    C --> K[电磁场分析]
+                    D --> L[有限元分析]
+                    D --> M[离散事件]
+                    D --> N[系统动力学]
+                    E --> O[3D建模]
+                    E --> P[虚拟现实]
+                    E --> Q[增强现实]
+            `;
+
+            // 时间轴图表
+            const timelineDefinition = `
+                timeline
+                    title 仿真软件发展时间轴
+                    section 20世纪50-70年代
+                        1950s : 仿真软件起源，主要用于航空、航天等领域
+                        1960s : 从专用领域扩展到通用领域，引入图形界面
+                        1970s : 快速发展阶段，功能、性能和易用性显著提高
+                    section 20世纪80-90年代
+                        1980s : 功能更加完善，引入随机过程、多变量分析、优化算法
+                        1990s : 应用领域不断拓展，引入人工智能、神经网络等技术
+                    section 21世纪初至今
+                        2000s : 向智能化、网络化、可视化方向发展
+                        2010s : 云计算、大数据、物联网等新兴技术领域应用
+                        2020s : 国产仿真软件迎来发展加速期
+            `;
+
+            // 使用API渲染图表
+            mermaid.render('graphDiv1', overviewDefinition)
+                .then(result => {
+                    document.getElementById('mermaid-overview').innerHTML = result.svg;
+                });
+
+            mermaid.render('graphDiv2', timelineDefinition)
+                .then(result => {
+                    document.getElementById('mermaid-timeline').innerHTML = result.svg;
+                });
+
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
